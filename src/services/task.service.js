@@ -3,23 +3,30 @@ const Task = require('../models/Task')
 
 exports.getAllTasksByUser=async (req, res)=>{
     const idUser = req.params.idUser
-    const tasks = await Task.aggregate([
-        {
-            $lookup:{
-                from:'users',
-                localField:'user',
-                foreignField:'_id',
-                as:'authorTask'
-            },
+    /**
+     * Esta parte comentada funciona. 
+     * Considero que usar .find().populate() es mas factible para lo que necesito en cuanto a simplicidad
+     */
+    // const tasks = await Task.aggregate([
+    //     {
+    //         $lookup:{
+    //             from:'users',
+    //             localField:'user',
+    //             foreignField:'_id',
+    //             as:'authorTask'
+    //         },
         
-        },
-        {
-            $unwind:'$authorTask'
-        },
-        {
-            $match:{ user:Types.ObjectId(idUser) }
-        }
-    ]);
+    //     },
+    //     {
+    //         $unwind:'$authorTask'
+    //     },
+    //     {
+    //         $match:{ user:Types.ObjectId(idUser) }
+    //     }
+    // ]);
+    const tasks = await Task.find({user:idUser}).populate('user','email')
+
+
     return res.json(tasks)
 }
 exports.addTask= async(req, res) => {
@@ -31,7 +38,7 @@ exports.addTask= async(req, res) => {
             description, 
             completed, 
             level,
-            user:Types.ObjectId(`${idUser}`)
+            user:idUser
          });
         await task.save()
         return res.json(task);
@@ -58,7 +65,6 @@ exports.updateTask= async(req, res) => {
 }
 exports.deleteTask= async(req, res) => {
     const idTask = req.params.id
-    let task
     await Task.findByIdAndDelete(idTask)
 
     return res.json({ msg: 'Task deleted successfully' })

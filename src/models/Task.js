@@ -18,9 +18,12 @@ const taskSchema = new Schema({
         default:"NORMAL"
     },
     user:{
-        type: Types.ObjectId
+        type: Types.ObjectId, ref:'User'
     }
     
+},
+{
+    versionKey:false
 })
 
 module.exports= model("Task",taskSchema)

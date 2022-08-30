@@ -48,7 +48,7 @@ exports.loginUser = async (req, res) => {
         email:user.email,
         id:user._id
     }, process.env.SECRET_TOKEN)
-    return res.header("auth-token",token).json({token})
+    return res.header("auth-token",token).json({token,user:{id:user._id,email:user.email}})
 }
 exports.getAllUsers = async (req, res) => {
     const users = await User.find();

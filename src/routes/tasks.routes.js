@@ -6,7 +6,7 @@ taskRouter.get('/:idUser',taskService.getAllTasksByUser)
 
 taskRouter.post('/:idUser', taskService.addTask)
 
-taskRouter.get('/:id', taskService.getTaskById)
+taskRouter.get('/task/:id', taskService.getTaskById)
 
 taskRouter.put('/:id', taskService.updateTask)
 
