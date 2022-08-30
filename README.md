@@ -6,14 +6,14 @@ The user has to register. Next, you need to log in to the page for a token to be
 Only authenticated users can create, delete, and update tasks. If you are not logged into the page, you cannot use task routes.
 
 ## Dependencies
-Express
-Mongoose
-Dotenv
-Cors
-Bcrypt
-JWT
-Morgan
-Nodemon -D
+Express  
+Mongoose  
+Dotenv  
+Cors  
+Bcrypt  
+JWT  
+Morgan  
+Nodemon -D  
 
 ## Deployment
 To deploy this API you have to do:
